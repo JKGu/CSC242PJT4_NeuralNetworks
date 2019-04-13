@@ -14,6 +14,10 @@ public class PerceptronClassifier extends LinearClassifier {
 	 */
 	public void update(double[] x, double y, double alpha) {
 		// This must be implemented by you
+		 for(int i=0; i<x.length; i++){
+	            double hw = threshold(VectorOps.dot(weights,x));
+	            weights[i] = weights[i] + ((alpha * (y-hw)) * x[i]);
+	        }
 	}
 	
 	/**
@@ -21,6 +25,13 @@ public class PerceptronClassifier extends LinearClassifier {
 	 */
 	public double threshold(double z) {
 		// This must be implemented by you
+		if(z < 0) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	
 	}
 	
 }
