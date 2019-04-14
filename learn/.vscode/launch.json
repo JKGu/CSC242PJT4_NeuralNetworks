@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PerceptronClassifierWithDisplay",
+            "request": "launch",
+            "mainClass": "learn.lc.examples.PerceptronClassifierWithDisplay"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LogisticClassifierEarthquakeClean",
+            "request": "launch",
+            "mainClass": "learn.lc.examples.LogisticClassifierEarthquakeClean"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LogisticClassifierWithDisplay",
+            "request": "launch",
+            "mainClass": "learn.lc.examples.LogisticClassifierWithDisplay"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PerceptronClassifierEarthquakeClean",
+            "request": "launch",
+            "mainClass": "learn.lc.examples.PerceptronClassifierEarthquakeClean"
+        }
+    ]
+}
