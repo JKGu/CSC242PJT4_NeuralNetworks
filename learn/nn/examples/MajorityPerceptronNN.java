@@ -40,6 +40,7 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 		for (int i=0; i < ninputs; i++) {
 			new Connection(inputs[i], outputs[0]);
 		}
+
 	}
 
 	/**
@@ -87,8 +88,9 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 			network.train(trainingSet, alpha);
 			List<Example> testingSet = generator.examples(n);
 			double accuracy = network.test(testingSet);
-			System.out.print(n + "\t" + accuracy + "\t");
+			System.out.print(n + "\t" + String.format("%.2f", accuracy) + "\t");
 			network.dump();
+			System.out.println();
 		}
 		System.out.println();
 		int n = 100;

@@ -32,7 +32,7 @@ public class MNISTNN extends MultiLayerFeedForwardNeuralNetwork {
 		double alpha = 0.10;
 		MNISTNN network = new MNISTNN();
 		System.out.println("MNIST: reading training data...");
-		String DATADIR = "src/learn/nn/examples";
+		String DATADIR = "learn/nn/examples";
 		List<Example> trainingSet = MNIST.read(DATADIR+"/train-images-idx3-ubyte", DATADIR+"/train-labels-idx1-ubyte");
 		System.out.println("MNIST: reading testing data...");
 		List<Example> testingSet = MNIST.read(DATADIR+"/t10k-images-idx3-ubyte", DATADIR+"/t10k-labels-idx1-ubyte");
