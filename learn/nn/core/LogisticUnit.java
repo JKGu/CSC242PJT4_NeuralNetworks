@@ -1,19 +1,19 @@
 package learn.nn.core;
+import java.util.Arrays;
+import java.util.List;
+import learn.math.util.VectorOps;
 
 /**
- * A LogisticUnit is a Unit that uses a sigmoid
- * activation function.
+ * A LogisticUnit is a Unit that uses a sigmoid activation function.
  */
 public class LogisticUnit extends NeuronUnit {
-	
 	/**
 	 * The activation function for a LogisticUnit is a 0-1 sigmoid
 	 * centered at z=0: 1/(1+e^(-z)). (AIMA Fig 18.7)
 	 */
 	@Override
 	public double activation(double z) {
-		// This must be implemented by you
-		return (Double) null;
+		return 1/(1+Math.pow(Math.E, z*-1));
 	}
 	
 	/**
@@ -34,7 +34,23 @@ public class LogisticUnit extends NeuronUnit {
 	 */
 	@Override
 	public void update(double[] x, double y, double alpha) {
-		// This must be implemented by you
+		List<Connection> incomingConnections = this.incomingConnections;
+		double weightVector[]=new double [incomingConnections.size()];
+		for(int i=0;i<incomingConnections.size();i++){
+			weightVector[i]=incomingConnections.get(i).weight;
+		}
+		double xNew[]=new double[x.length+1];
+		xNew[0]=1;
+		for(int i=0; i<x.length;i++){
+			xNew[i+1]=x[i];
+		}
+	
+		for(int i=0; i<xNew.length; i++){
+			double hw = this.activation(VectorOps.dot(weightVector, xNew));
+			incomingConnections.get(i).weight = incomingConnections.get(i).weight + ((alpha * (y-hw)) * (hw * (1-hw)) * xNew[i]);
+			weightVector[i]=incomingConnections.get(i).weight;
+		}
+		
 	}
 	
 }

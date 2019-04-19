@@ -36,7 +36,6 @@ abstract public class SingleLayerFeedForwardNeuralNetwork extends FeedForwardNeu
 			for (Connection conn : unit.incomingConnections) {
 				System.out.format("\t%.2f", conn.weight);
 			}
-			System.out.println();
 		}
 	}
 	
@@ -47,7 +46,9 @@ abstract public class SingleLayerFeedForwardNeuralNetwork extends FeedForwardNeu
 	 * each example on each step.
 	 */
 	public void train(List<Example> examples, double alpha) {
-		// This must be implemented by you
+		for(int i=0;i<examples.size();i++){
+			this.train(examples.get(i),alpha);
+		}
 	}
 	
 	/**

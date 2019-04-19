@@ -1,8 +1,11 @@
 package learn.nn.core;
 
+import java.util.List;
+
+import learn.math.util.VectorOps;
+
 /**
- * A PerceptronUnit is a Unit that uses a hard threshold
- * activation function.
+ * A PerceptronUnit is a Unit that uses a hard threshold activation function.
  */
 public class PerceptronUnit extends NeuronUnit {
 	
@@ -12,8 +15,12 @@ public class PerceptronUnit extends NeuronUnit {
 	 */
 	@Override
 	public double activation(double z) {
-		// This must be implemented by you\
-		return (Double) null;
+		if(z < 0) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 	
 	/**
@@ -24,6 +31,21 @@ public class PerceptronUnit extends NeuronUnit {
 	 */
 	@Override
 	public void update(double[] x, double y, double alpha) {
-		// This must be implemented by you
+		List<Connection> incomingConnections = this.incomingConnections;
+		double weightVector[]=new double [incomingConnections.size()];
+		for(int i=0;i<incomingConnections.size();i++){
+			weightVector[i]=incomingConnections.get(i).weight;
+		}
+		double xNew[]=new double[x.length+1];
+		xNew[0]=1;
+		for(int i=0; i<x.length;i++){
+			xNew[i+1]=x[i];
+		}
+	
+		for(int i=0; i<xNew.length; i++){
+			double hw = this.activation(VectorOps.dot(weightVector, xNew));
+			incomingConnections.get(i).weight = incomingConnections.get(i).weight + ((alpha * (y-hw)) * (hw * (1-hw)) * xNew[i]);
+			weightVector[i]=incomingConnections.get(i).weight;
+		}
 	}
 }
