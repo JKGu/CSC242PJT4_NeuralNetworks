@@ -36,11 +36,12 @@ public class IrisExampleGenerator {
 		String label = scanner.next();
 		double[] inputs = { sepalLength, sepalWidth, petalLength, petalWidth };
 		double[] outputs = { 0.0, 0.0, 0.0 };
-		if (label.equals("Iris-setosa")) {
+		
+		if (label.startsWith("Iris-setosa")) {
 			outputs[0] = 1.0;
-		} else if (label.equals("Iris-versicolor")) {
+		} else if (label.startsWith("Iris-versicolor")) {
 			outputs[1] = 1.0;
-		} else if (label.equals("Iris-virginica")) {
+		} else if (label.startsWith("Iris-virginica")) {
 			outputs[2] = 1.0;
 		} else {
 			throw new IOException("bad class label " + label);

@@ -45,15 +45,9 @@ public class LogisticUnit extends NeuronUnit {
 			xNew[i+1]=x[i];
 		}
 	
+		double hw = this.activation(VectorOps.dot(xNew,weightVector));
 		for(int i=0; i<xNew.length; i++){
-			double hw = this.activation(VectorOps.dot(xNew,weightVector));
-			double test = alpha * (y-hw) * hw * (1-hw) * xNew[i];
-			//System.out.println("--------TEST:"+test);
 			incomingConnections.get(i).weight = incomingConnections.get(i).weight + alpha * (y-hw) * hw * (1-hw) * xNew[i];
-			//System.out.println("Looking at:"+(y-hw));
-			weightVector[i]=incomingConnections.get(i).weight;
-			//hw = this.activation(VectorOps.dot(weightVector, xNew));
-			//System.out.println("Learned:"+(y-hw));
 		}
 
 		
