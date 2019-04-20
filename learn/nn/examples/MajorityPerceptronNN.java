@@ -35,7 +35,7 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 		}
 		// Could use LogisticUnit also; either way the network is a ``perceptron'' (AIMA p730)
 		NeuronUnit[] outputs = this.getOutputUnits();
-		outputs[0] = new PerceptronUnit();
+		outputs[0] = new LogisticUnit();
 		// Connect each of the inputs to the output
 		for (int i=0; i < ninputs; i++) {
 			new Connection(inputs[i], outputs[0]);
@@ -47,7 +47,10 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 	 * Output of this NN is the 0-1 output of the only output unit.
 	 */
 	public double getOutputValue() {
-		return (int)this.getOutputUnits()[0].getOutput();
+
+		double tmp = this.getOutputUnits()[0].getOutput();
+		if(tmp>0.5) return 1.0;
+		return 0.0;
 	}
 	
 	/**
@@ -71,7 +74,7 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 		int ninputs = 11;
 		double alpha = 0.95;
 		// AIMA Fig 18.22(a) goes to 100 samples; I found ~3000 needed
-		int nmax = 100000;
+		int nmax = 3000;
 		int nstep = 5;
 		if (argv.length > 0) {
 			nmax = Integer.parseInt(argv[0]);
