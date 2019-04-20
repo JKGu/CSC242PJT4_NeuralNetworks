@@ -35,7 +35,7 @@ public class MajorityPerceptronNN extends SingleLayerFeedForwardNeuralNetwork {
 		}
 		// Could use LogisticUnit also; either way the network is a ``perceptron'' (AIMA p730)
 		NeuronUnit[] outputs = this.getOutputUnits();
-		outputs[0] = new PerceptronUnit();
+		outputs[0] = new LogisticUnit();
 		// Connect each of the inputs to the output
 		for (int i=0; i < ninputs; i++) {
 			new Connection(inputs[i], outputs[0]);

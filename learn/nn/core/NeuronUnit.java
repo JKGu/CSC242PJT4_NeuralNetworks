@@ -85,7 +85,7 @@ abstract public class NeuronUnit extends Unit {
 	 * This method must be specified by subclassses.
 	 */
 	abstract public double activation(double in);
-	
+	abstract public double activationPrime(double in);
 	/**
 	 * Update the weights of this NeuronUnit using the given
 	 * input values, the given output value, and learning rate (alpha).

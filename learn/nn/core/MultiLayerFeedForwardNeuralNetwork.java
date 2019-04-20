@@ -3,6 +3,7 @@ package learn.nn.core;
 import java.util.List;
 import java.util.Random;
 
+import learn.math.util.VectorOps;
 import learn.nn.core.Example;
 
 /**
@@ -181,15 +182,50 @@ abstract public class MultiLayerFeedForwardNeuralNetwork extends FeedForwardNeur
 	 */
 	public void backprop(Example example, double alpha) {
 
-		// This must be implemented by you
+		double[][] deltaArrays = new double [this.layers.length][];
 
+		NeuronUnit[] outputs = this.getOutputUnits();
+		deltaArrays[this.layers.length-1] = new double [outputs.length];
 		// for each node j in the output layer do
 		//     Delta[j] <- g'(in_j) \times (y_j - a_j)
+		for(int j=0; j<outputs.length; j++){
+		double in_j=outputs[j].getInputSum();
+		double a_j=outputs[j].activation(in_j);
+		double y_j=example.outputs[j];
+		double tmp = outputs[j].activationPrime(in_j)*(y_j-a_j);
+		deltaArrays[this.layers.length-1][j]=tmp;
+		}
+
 		// for l = L-1 to 1 do
 		//     for each node i in layer l do 
 		//         Delta[i] <- g'(in_i) * \sum_j w_ij Delta[j]
+
+		for(int l=this.layers.length-2;l>=1;l--){
+			deltaArrays[l] = new double [this.layers[l].length];
+			for(int i=0; i<this.layers[l].length;i++){
+				double in_i=((NeuronUnit)this.layers[l][i]).getInputSum();
+				double gPrime = ((NeuronUnit)this.layers[l][i]).activationPrime(in_i);
+				double tempSum = 0;
+
+				for(int j=0; j<deltaArrays[l+1].length; j++){
+					List<Connection> i_jConnections = this.layers[l][i].outgoingConnections;
+					tempSum += deltaArrays[l+1][j]*i_jConnections.get(j).weight;
+				}
+				deltaArrays[l][i]=gPrime*tempSum;
+			}
+		}
+
 		// for each weight w_ij in network do
 		//     w_ij <- w_ij + alpha * a_i * delta_j
+		for(int m =0; m<this.layers.length-1; m++){
+			for(int n=0; n<this.layers[m].length; n++){
+				List<Connection> mn_Out = this.layers[m][n].outgoingConnections;
+				for(int w=0; w<mn_Out.size();w++){
+					mn_Out.get(w).weight=mn_Out.get(w).weight+alpha*this.layers[m][n].getOutput()*deltaArrays[m+1][w];
+				}
+			}
+		}
+		
 	}
 	
 	/**
